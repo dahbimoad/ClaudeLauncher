@@ -1,0 +1,17 @@
+<Application x:Class="ClaudeLauncher.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="Bg" Color="#1B1B1D"/>
+        <SolidColorBrush x:Key="Field" Color="#232326"/>
+        <SolidColorBrush x:Key="Border" Color="#34343A"/>
+        <SolidColorBrush x:Key="RowHover" Color="#26262A"/>
+        <SolidColorBrush x:Key="RowSelected" Color="#303036"/>
+        <SolidColorBrush x:Key="Text" Color="#ECECEE"/>
+        <SolidColorBrush x:Key="Muted" Color="#8C8C94"/>
+        <SolidColorBrush x:Key="PrimaryBg" Color="#ECECEE"/>
+        <SolidColorBrush x:Key="PrimaryText" Color="#151517"/>
+        <FontFamily x:Key="Icons">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+    </Application.Resources>
+</Application>
