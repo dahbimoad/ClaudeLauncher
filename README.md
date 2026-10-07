@@ -4,7 +4,7 @@
 
 Open [Claude Code](https://claude.com/claude-code) in any project folder in one keystroke. No more `cd Desktop`, `cd projects`, `cd my-app`, `claude`.
 
-Type a few letters of the project name, press **Enter**, and Claude starts in that folder in a new Windows Terminal tab. Every session goes into the same terminal window as tabs, unless you ask for a new window.
+Type a few letters of the project name, press **Enter**, and Claude starts in that folder in a new Windows Terminal tab. The tab opens in the Windows Terminal window you already have open, unless you ask for a new window.
 
 ![platform](https://img.shields.io/badge/platform-Windows%2010%2F11-blue) ![dotnet](https://img.shields.io/badge/.NET-10-purple) ![license](https://img.shields.io/badge/license-MIT-lightgrey)
 
@@ -12,7 +12,7 @@ Type a few letters of the project name, press **Enter**, and Claude starts in th
 
 - **Most used on top.** Projects are sorted by how often you open them, then by how recently.
 - **Pin favorites.** Pinned projects stay at the very top no matter what.
-- **One terminal window.** Each launch adds a tab to the same Windows Terminal window. **Ctrl+Enter** or **New window** opens a separate one when you want it.
+- **Your terminal window.** Each launch adds a tab to the Windows Terminal window you used last (a new window only if none is open). **Ctrl+Enter** or **New window** opens a separate one when you want it.
 - **Any folder.** Every folder inside `Desktop\projects` is listed automatically, and **Add folder** adds any other folder on your PC.
 - **Keyboard first.** Type to search, arrows to move, Enter to launch. The mouse works too.
 - **Automatic updates.** New releases download in the background and install when you restart or close the app.
@@ -24,7 +24,9 @@ Download `ClaudeLauncher-win-Setup.exe` from the [latest release](https://github
 
 The installer is not code signed, so Windows SmartScreen may warn once: **More info > Run anyway**.
 
-**Requirements:** Windows 10 or 11, [Windows Terminal](https://aka.ms/terminal), [PowerShell 7](https://aka.ms/powershell) (`pwsh`) and [Claude Code](https://claude.com/claude-code) (`claude` on your PATH). The installer adds the .NET 10 Desktop Runtime if it is missing.
+**Requirements:** Windows 10 or 11, [Windows Terminal](https://aka.ms/terminal), PowerShell (uses [PowerShell 7](https://aka.ms/powershell) `pwsh` when installed, otherwise the built-in Windows PowerShell) and [Claude Code](https://claude.com/claude-code) (`claude` on your PATH). The installer adds the .NET 10 Desktop Runtime if it is missing.
+
+**Troubleshooting:** every launch is logged to `%APPDATA%\ClaudeLauncher\launcher.log` (shell used, exact `wt.exe` command, any error).
 
 ## Usage
 

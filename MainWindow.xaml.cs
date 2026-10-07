@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -89,7 +90,7 @@ public partial class MainWindow : Window
             case Key.Down: MoveSelection(+1); break;
             case Key.Up: MoveSelection(-1); break;
             case Key.Enter when ctrl: Launch(SelectedProject, TerminalLauncher.OpenInNewWindow); break;
-            case Key.Enter: Launch(SelectedProject, TerminalLauncher.OpenInSharedWindow); break;
+            case Key.Enter: Launch(SelectedProject, TerminalLauncher.OpenInCurrentWindow); break;
             case Key.P when ctrl: TogglePin(SelectedProject); break;
             case Key.Escape: SearchBox.Clear(); break;
             default: return;
@@ -108,10 +109,10 @@ public partial class MainWindow : Window
     private ProjectEntry? RowProject(object sender) => (sender as FrameworkElement)?.DataContext as ProjectEntry;
 
     private void OnListDoubleClick(object sender, MouseButtonEventArgs e) =>
-        Launch(SelectedProject, TerminalLauncher.OpenInSharedWindow);
+        Launch(SelectedProject, TerminalLauncher.OpenInCurrentWindow);
 
     private void OnOpenClick(object sender, RoutedEventArgs e) =>
-        Launch(SelectedProject, TerminalLauncher.OpenInSharedWindow);
+        Launch(SelectedProject, TerminalLauncher.OpenInCurrentWindow);
 
     private void OnNewWindowClick(object sender, RoutedEventArgs e) =>
         Launch(SelectedProject, TerminalLauncher.OpenInNewWindow);
@@ -119,7 +120,7 @@ public partial class MainWindow : Window
     private void OnPinClick(object sender, RoutedEventArgs e) => TogglePin(RowProject(sender));
 
     private void OnMenuOpenClick(object sender, RoutedEventArgs e) =>
-        Launch(RowProject(sender), TerminalLauncher.OpenInSharedWindow);
+        Launch(RowProject(sender), TerminalLauncher.OpenInCurrentWindow);
 
     private void OnMenuNewWindowClick(object sender, RoutedEventArgs e) =>
         Launch(RowProject(sender), TerminalLauncher.OpenInNewWindow);
@@ -167,7 +168,16 @@ public partial class MainWindow : Window
     {
         if (project is null) return;
 
-        openTerminal(project);
+        try
+        {
+            openTerminal(project);
+        }
+        catch (Exception ex) when (ex is Win32Exception or FileNotFoundException)
+        {
+            // Stays open so the user can retry; the log names the missing program.
+            Log.Error($"Could not open a terminal for '{project.Name}' ({project.FolderPath})", ex);
+            return;
+        }
         _state.RecordLaunch(project.FolderPath);
         _state.Save();
 
