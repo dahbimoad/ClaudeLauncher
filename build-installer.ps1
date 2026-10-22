@@ -7,7 +7,8 @@ Set-Location $PSScriptRoot
 $version = $project.Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
 
 Remove-Item publish -Recurse -Force -ErrorAction SilentlyContinue
-dotnet publish -c Release -r win-x64 --self-contained false -o publish
+# Self-contained: the .NET runtime ships inside the app, so nothing else gets installed on the user's PC.
+dotnet publish -c Release -r win-x64 --self-contained true -p:PublishReadyToRun=true -o publish
 if ($LASTEXITCODE -ne 0) { throw 'dotnet publish failed' }
 
 vpk pack `
@@ -18,7 +19,6 @@ vpk pack `
     --packDir publish `
     --mainExe ClaudeLauncher.exe `
     --icon Assets\icon.ico `
-    --framework net10.0-x64-desktop `
     --shortcuts 'Desktop,StartMenuRoot' `
     --outputDir Releases
 if ($LASTEXITCODE -ne 0) { throw 'vpk pack failed' }

@@ -24,7 +24,7 @@ Download `ClaudeLauncher-win-Setup.exe` from the [latest release](https://github
 
 The installer is not code signed, so Windows SmartScreen may warn once: **More info > Run anyway**.
 
-**Requirements:** Windows 10 or 11, [Windows Terminal](https://aka.ms/terminal), PowerShell (uses [PowerShell 7](https://aka.ms/powershell) `pwsh` when installed, otherwise the built-in Windows PowerShell) and [Claude Code](https://claude.com/claude-code) (`claude` on your PATH). The installer adds the .NET 10 Desktop Runtime if it is missing.
+**Requirements:** Windows 10 or 11, [Windows Terminal](https://aka.ms/terminal), PowerShell (uses [PowerShell 7](https://aka.ms/powershell) `pwsh` when installed, otherwise the built-in Windows PowerShell) and [Claude Code](https://claude.com/claude-code) (`claude` on your PATH). The .NET runtime is bundled inside the app, so the installer does not install anything else.
 
 **Troubleshooting:** every launch is logged to `%APPDATA%\ClaudeLauncher\launcher.log` (shell used, exact `wt.exe` command, any error).
 
