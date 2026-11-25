@@ -10,7 +10,7 @@ Type a few letters of the project name, press **Enter**, and Claude starts in th
 
 ## Features
 
-- **Most used on top.** Projects are sorted by how often you open them, then by how recently.
+- **Most used on top.** Projects are sorted by how often you open them, then by how recently. The list re-sorts as soon as you open one.
 - **Pin favorites.** Pinned projects stay at the very top no matter what.
 - **Your terminal window.** Each launch adds a tab to the Windows Terminal window you used last (a new window only if none is open). **Ctrl+Enter** or **New window** opens a separate one when you want it.
 - **Any folder.** Every folder inside `Desktop\projects` is listed automatically, and **Add folder** adds any other folder on your PC.

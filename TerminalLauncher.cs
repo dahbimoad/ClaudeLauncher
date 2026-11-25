@@ -32,10 +32,34 @@ public static class TerminalLauncher
         {
             startInfo.ArgumentList.Add(arg);
         }
+        RemoveInheritedClaudeSessionMarkers(startInfo);
 
         Log.Info($"Launching '{project.Name}': wt.exe {string.Join(' ', startInfo.ArgumentList.Select(Quote))}");
         using var process = Process.Start(startInfo);
         Log.Info($"wt.exe started (pid {process?.Id.ToString() ?? "none"})");
+    }
+
+    // When the launcher itself was started from inside a Claude Code session, it inherits that session's markers
+    // (CLAUDECODE, CLAUDE_CODE_CHILD_SESSION, ...). Passed on to the new tab, they make Claude treat it as a child
+    // session and turn transcript saving off. Variables the user set on purpose (User/Machine scope) are kept.
+    private static void RemoveInheritedClaudeSessionMarkers(ProcessStartInfo startInfo)
+    {
+        var markers = startInfo.Environment.Keys
+            .Where(name => name.Equals("CLAUDECODE", StringComparison.OrdinalIgnoreCase)
+                           || name.Equals("CLAUDE_PID", StringComparison.OrdinalIgnoreCase)
+                           || name.StartsWith("CLAUDE_CODE_", StringComparison.OrdinalIgnoreCase))
+            .Where(name => Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.User) is null
+                           && Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Machine) is null)
+            .ToList();
+
+        foreach (var name in markers)
+        {
+            startInfo.Environment.Remove(name);
+        }
+        if (markers.Count > 0)
+        {
+            Log.Info($"Removed inherited Claude session variables: {string.Join(", ", markers)}");
+        }
     }
 
     private static string ResolveShell()

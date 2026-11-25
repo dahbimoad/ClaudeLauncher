@@ -182,6 +182,8 @@ public partial class MainWindow : Window
         _state.Save();
 
         SearchBox.Clear();
+        // Re-sort now so the new count shows straight away, not only on the next activation.
+        Reload(project.FolderPath);
         WindowState = WindowState.Minimized;
     }
 }
